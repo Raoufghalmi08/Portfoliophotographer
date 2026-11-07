@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#e8e9df" />
+  <meta name="description" content="ROFF.PIC — Photography portfolio based in Oran, Algeria." />
+  <title>ROFF.PIC — Photography</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #e8e9df;
+      --paper-deep: #d9dccf;
+      --ink: #171916;
+      --muted: #6d7066;
+      --brown: #8b6041;
+      --line: rgba(23,25,22,.18);
+      --white: #f8f8f1;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; background: var(--paper); color: var(--ink);
+      font-family: "DM Sans", sans-serif; overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    .shell { width: min(1440px, 100% - 64px); margin: auto; }
+    .topbar {
+      height: 82px; display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--line); letter-spacing: .04em;
+    }
+    .brand { font-size: 21px; font-weight: 700; letter-spacing: -.07em; }
+    .brand span { color: var(--brown); }
+    .nav { display: flex; gap: 32px; align-items: center; font-size: 11px; text-transform: uppercase; letter-spacing: .16em; }
+    .nav a { opacity: .72; transition: opacity .25s; }
+    .nav a:hover { opacity: 1; }
+    .nav .contact-link { border: 1px solid var(--ink); border-radius: 99px; padding: 11px 17px; opacity: 1; }
+    .hero {
+      min-height: min(780px, calc(100svh - 82px)); padding: 38px 0 48px;
+      display: grid; grid-template-columns: .83fr 1.17fr; gap: clamp(28px, 5vw, 84px); align-items: center;
+    }
+    .hero-copy { padding: 36px 0 36px 4vw; position: relative; z-index: 1; }
+    .eyebrow { text-transform: uppercase; letter-spacing: .22em; font-size: 10px; color: var(--muted); display:flex; align-items:center; gap:10px; }
+    .eyebrow:before { content:""; width:25px; height:1px; background:var(--brown); }
+    h1 {
+      font-family: "Playfair Display", serif; font-weight: 500;
+      font-size: clamp(58px, 8.2vw, 124px); line-height: .91; letter-spacing: -.065em;
+      margin: 28px 0 25px; max-width: 650px;
+    }
+    h1 em { color: var(--brown); font-weight: 500; }
+    .intro { max-width: 340px; color: #55594f; font-size: 14px; line-height: 1.9; }
+    .hero-bottom { margin-top: 52px; display:flex; align-items:center; gap:22px; }
+    .round-link {
+      width: 54px; height:54px; border:1px solid var(--ink); border-radius:50%;
+      display:grid; place-items:center; font-size:20px; transition: .3s;
+    }
+    .round-link:hover { background:var(--ink); color:var(--paper); transform:rotate(45deg); }
+    .small-note { font-size:10px; letter-spacing:.14em; text-transform:uppercase; line-height:1.7; color:var(--muted); }
+    .portrait-wrap { height: min(690px, 78vh); min-height: 480px; position:relative; overflow:hidden; background:var(--paper-deep); }
+    .portrait-wrap:after { content:""; position:absolute; inset:12px; border:1px solid rgba(248,248,241,.52); pointer-events:none; }
+    .portrait { width:100%; height:100%; object-fit:cover; object-position:center 42%; display:block; }
+    .portrait-caption {
+      position:absolute; z-index:2; bottom:26px; right:28px; color:white;
+      text-transform:uppercase; font-size:9px; letter-spacing:.18em;
+      text-shadow:0 1px 10px rgba(0,0,0,.4);
+    }
+    .ticker-section { padding: 55px 0 68px; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+    .section-head { display:flex; align-items:end; justify-content:space-between; margin-bottom:28px; gap:20px; }
+    .section-kicker { font-size:10px; text-transform:uppercase; letter-spacing:.2em; color:var(--muted); }
+    h2 { font-family:"Playfair Display",serif; font-weight:500; font-size:clamp(38px,5vw,66px); letter-spacing:-.05em; margin:9px 0 0; }
+    .section-side { font-size:11px; color:var(--muted); max-width:190px; line-height:1.7; }
+    .marquee { overflow:hidden; width:100%; margin:14px 0; }
+    .marquee-track { display:flex; width:max-content; gap:14px; animation: move-left 38s linear infinite; }
+    .marquee.reverse .marquee-track { animation-name: move-right; animation-duration:44s; }
+    .marquee:hover .marquee-track { animation-play-state:paused; }
+    .work-card { width:clamp(210px, 26vw, 360px); height:clamp(145px, 18vw, 240px); flex:none; position:relative; overflow:hidden; background:#c8c8b9; }
+    .work-card img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .7s cubic-bezier(.2,.7,.2,1); }
+    .work-card:hover img { transform:scale(1.06); }
+    .work-card:after { content:""; position:absolute; inset:0; background:linear-gradient(transparent 55%,rgba(0,0,0,.48)); }
+    .work-label { position:absolute; bottom:14px; left:16px; z-index:1; color:white; font-size:10px; letter-spacing:.15em; text-transform:uppercase; }
+    @keyframes move-left { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+    @keyframes move-right { from { transform:translateX(-50%); } to { transform:translateX(0); } }
+    .about {
+      padding:100px 0; display:grid; grid-template-columns:1fr 1fr; gap:10vw; align-items:center;
+    }
+    .about h2 { max-width:500px; }
+    .about-text { color:#55594f; font-size:14px; line-height:2; max-width:490px; }
+    .about-text strong { color:var(--ink); font-weight:600; }
+    .about-meta { display:flex; gap:42px; margin-top:34px; }
+    .meta-item b { display:block; font-family:"Playfair Display",serif; font-size:25px; font-weight:500; }
+    .meta-item span { display:block; margin-top:5px; font-size:9px; text-transform:uppercase; letter-spacing:.16em; color:var(--muted); }
+    .contact {
+      background:#26251f; color:#f0f0e7; padding:76px 0 30px;
+    }
+    .contact-inner { display:flex; justify-content:space-between; align-items:end; gap:40px; }
+    .contact h2 { font-size:clamp(48px,7vw,90px); line-height:.98; }
+    .contact h2 em { color:#b88b68; font-style:normal; }
+    .contact-copy { color:#c3c2b7; max-width:300px; font-size:13px; line-height:1.9; margin:20px 0 28px; }
+    .email-link { display:inline-flex; align-items:center; gap:13px; border-bottom:1px solid #b88b68; padding-bottom:9px; font-size:12px; }
+    .footer { border-top:1px solid rgba(255,255,255,.2); margin-top:80px; padding-top:20px; display:flex; justify-content:space-between; color:#aaa99e; font-size:9px; letter-spacing:.13em; text-transform:uppercase; }
+    .footer a:hover { color:white; }
+    @media (max-width: 760px) {
+      .shell { width:calc(100% - 36px); }
+      .topbar { height:68px; }
+      .nav { gap:15px; font-size:9px; }
+      .nav a:not(.contact-link) { display:none; }
+      .nav .contact-link { padding:9px 13px; }
+      .hero { display:flex; flex-direction:column-reverse; align-items:stretch; gap:0; padding:18px 0 48px; min-height:auto; }
+      .portrait-wrap { height: min(75svh, 680px); min-height:420px; }
+      .hero-copy { padding:35px 4px 8px; }
+      h1 { font-size:clamp(62px, 17vw, 100px); margin:20px 0; }
+      .hero-bottom { margin-top:28px; }
+      .ticker-section { padding:45px 0 52px; }
+      .section-head { align-items:start; flex-direction:column; }
+      .section-side { max-width:260px; }
+      .work-card { width:245px; height:165px; }
+      .about { padding:72px 0; grid-template-columns:1fr; gap:24px; }
+      .contact { padding:60px 0 24px; }
+      .contact-inner { display:block; }
+      .footer { margin-top:58px; gap:18px; flex-wrap:wrap; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior:auto; }
+      .marquee-track { animation:none !important; }
+      * { transition:none !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="shell topbar">
+    <a class="brand" href="#">ROFF<span>.</span>PIC</a>
+    <nav class="nav" aria-label="Main navigation">
+      <a href="#works">Selected work</a>
+      <a href="#about">About</a>
+      <a class="contact-link" href="#contact">Get in touch ↗</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="shell hero">
+      <div class="hero-copy">
+        <div class="eyebrow">Photographer · Oran, Algeria</div>
+        <h1>Frames<br>that <em>feel.</em></h1>
+        <p class="intro">I capture places, people and fleeting moments — turning everyday scenes into photographs worth remembering.</p>
+        <div class="hero-bottom">
+          <a class="round-link" href="#works" aria-label="Explore portfolio">↘</a>
+          <div class="small-note">A visual journal<br>by ROFF.PIC</div>
+        </div>
+      </div>
+      <div class="portrait-wrap">
+        <!-- Your main portrait is here. Replace images/profile.png to change it. -->
+        <img class="portrait" src="images/profile.png" alt="Portrait of the photographer" />
+        <div class="portrait-caption">The eye behind the lens · 01/01</div>
+      </div>
+    </section>
+
+    <section class="ticker-section" id="works">
+      <div class="shell section-head">
+        <div>
+          <div class="section-kicker">A selection of moments / 2026</div>
+          <h2>Selected works<span style="color:var(--brown)">.</span></h2>
+        </div>
+        <p class="section-side">Two moving frames. A collection that keeps unfolding — hover to pause.</p>
+      </div>
+      <!-- Add or replace your photos in the WORKS arrays near the bottom of this file. -->
+      <div class="marquee" aria-label="Photography gallery moving left">
+        <div class="marquee-track" id="row-one"></div>
+      </div>
+      <div class="marquee reverse" aria-label="Photography gallery moving right">
+        <div class="marquee-track" id="row-two"></div>
+      </div>
+    </section>
+
+    <section class="shell about" id="about">
+      <div>
+        <div class="section-kicker">Behind the camera</div>
+        <h2>More than a picture. <span style="color:var(--brown)">A feeling.</span></h2>
+      </div>
+      <div class="about-text">
+        <p>I'm <strong>Raouf</strong>, a photographer based in <strong>Oran, Algeria</strong>. I’m drawn to architecture, city details, atmosphere and the small moments people often pass by.</p>
+        <p>ROFF.PIC is where I collect the scenes I see differently. For collaborations, event coverage or a photography session, feel free to reach out.</p>
+        <div class="about-meta">
+          <div class="meta-item"><b>ORAN</b><span>Based in Algeria</span></div>
+          <div class="meta-item"><b>01—26</b><span>Visual journal</span></div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="contact" id="contact">
+      <div class="shell">
+        <div class="contact-inner">
+          <div>
+            <div class="section-kicker" style="color:#b9b7aa">Have a story in mind?</div>
+            <h2>Let's make<br>it <em>visible.</em></h2>
+          </div>
+          <div>
+            <p class="contact-copy">For event coverage, creative projects or just to say hello — let's start a conversation.</p>
+            <!-- Replace the Instagram URL below with your exact profile link. -->
+            <a class="email-link" href="https://www.instagram.com/roff.pic/" target="_blank" rel="noopener">Instagram · @roff.pic ↗</a>
+          </div>
+        </div>
+        <div class="footer">
+          <span>© 2026 ROFF.PIC</span>
+          <span>Made with an eye for detail</span>
+          <a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Back to top ↑</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    /*
+      ============================================
+      ADD YOUR PHOTOS HERE
+      1) Put your photo files inside the "images" folder.
+      2) Change the paths below, for example:
+         { src: "images/oran-night.jpg", label: "Oran at night" }
+      3) Add as many items as you like.
+      Row 1 moves LEFT. Row 2 moves RIGHT.
+      ============================================
+    */
+    const ROW_ONE = [
+      { src: "images/Background.png", label: "Architecture" },
+      { src: "images/IMG_E4324.JPG", label: "City lights" },
+      { src: "images/IMG_E4325.JPG", label: "Street moments" },
+      { src: "images/IMG_E4326.JPG", label: "Details" }
+    ];
+
+    const ROW_TWO = [
+      { src: "images/Background.png", label: "Urban stories" },
+      { src: "images/IMG_E4324.JPG", label: "Events" },
+      { src: "images/IMG_E4325.JPG", label: "Golden hour" },
+      { src: "images/IMG_E4326.JPG", label: "The city" }
+    ];
+
+    function makeCard(item) {
+      const card = document.createElement("div");
+      card.className = "work-card";
+      const image = document.createElement("img");
+      image.src = item.src;
+      image.alt = item.label;
+      image.loading = "lazy";
+      image.onerror = () => {
+        image.remove();
+        card.style.background = "linear-gradient(135deg, #b7b8a9, #8b6041)";
+        const hint = document.createElement("span");
+        hint.textContent = "ADD PHOTO IN CODE";
+        hint.style.cssText = "position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-size:9px;letter-spacing:.18em;";
+        card.appendChild(hint);
+      };
+      const label = document.createElement("span");
+      label.className = "work-label";
+      label.textContent = item.label;
+      card.append(image, label);
+      return card;
+    }
+
+    function buildMarquee(elementId, items) {
+      const track = document.getElementById(elementId);
+      // Duplicate the same set to make the horizontal loop seamless.
+      [...items, ...items].forEach(item => track.appendChild(makeCard(item)));
+    }
+
+    buildMarquee("row-one", ROW_ONE);
+    buildMarquee("row-two", ROW_TWO);
+  </script>
+</body>
+</html>
