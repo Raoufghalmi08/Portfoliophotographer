@@ -126,6 +126,66 @@
       .marquee-track { animation:none !important; }
       * { transition:none !important; }
     }
+
+/* Interactive Gallery */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.96);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 30px;
+}
+
+.lightbox.active {
+  display: flex;
+}
+
+.lightbox img {
+  max-width: 90%;
+  max-height: 85vh;
+  object-fit: contain;
+}
+
+.lightbox button {
+  position: absolute;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 35px;
+  cursor: pointer;
+}
+
+.lightbox .close {
+  top: 20px;
+  right: 30px;
+}
+
+.lightbox .prev {
+  left: 20px;
+}
+
+.lightbox .next {
+  right: 20px;
+}
+
+.lightbox .counter {
+  position: absolute;
+  bottom: 20px;
+  color: white;
+  font-size: 13px;
+  letter-spacing: 3px;
+}
+
+@media (max-width: 600px) {
+  .lightbox { padding: 12px; }
+  .lightbox img { max-width: 100%; max-height: 80vh; }
+  .lightbox .prev { left: 5px; }
+  .lightbox .next { right: 5px; }
+}
+
   </style>
 </head>
 <body>
@@ -213,6 +273,14 @@
     </footer>
   </main>
 
+<div class="lightbox" id="lightbox">
+  <button class="close" id="closeLightbox">×</button>
+  <button class="prev" id="prevImage">‹</button>
+  <img id="lightboxImage" src="" alt="">
+  <button class="next" id="nextImage">›</button>
+  <div class="counter" id="imageCounter"></div>
+</div>
+
   <script>
     /*
       ============================================
@@ -241,6 +309,7 @@
     function makeCard(item) {
       const card = document.createElement("div");
       card.className = "work-card";
+      card.style.cursor = "pointer";
       const image = document.createElement("img");
       image.src = item.src;
       image.alt = item.label;
@@ -257,6 +326,13 @@
       label.className = "work-label";
       label.textContent = item.label;
       card.append(image, label);
+
+image.addEventListener("click", () => {
+  const index = [...ROW_ONE, ...ROW_TWO].findIndex(
+    item => item.src === image.src || item.src === image.getAttribute("src")
+  );
+  if (index !== -1) openGallery(index);
+});
       return card;
     }
 
@@ -268,6 +344,62 @@
 
     buildMarquee("row-one", ROW_ONE);
     buildMarquee("row-two", ROW_TWO);
+
+const lightbox = document.getElementById("lightbox");
+const lightboxImage = document.getElementById("lightboxImage");
+const counter = document.getElementById("imageCounter");
+
+let galleryImages = [];
+let currentIndex = 0;
+
+function openGallery(index) {
+  galleryImages = [...ROW_ONE, ...ROW_TWO];
+  currentIndex = index;
+  showImage();
+  lightbox.classList.add("active");
+  document.body.style.overflow = "hidden";
+}
+
+function showImage() {
+  const item = galleryImages[currentIndex];
+  lightboxImage.src = item.src;
+  lightboxImage.alt = item.label;
+  counter.textContent =
+    `${currentIndex + 1} / ${galleryImages.length}`;
+}
+
+function nextImage() {
+  currentIndex = (currentIndex + 1) % galleryImages.length;
+  showImage();
+}
+
+function prevImage() {
+  currentIndex =
+    (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+  showImage();
+}
+
+function closeGallery() {
+  lightbox.classList.remove("active");
+  document.body.style.overflow = "";
+}
+
+document.getElementById("nextImage").onclick = nextImage;
+document.getElementById("prevImage").onclick = prevImage;
+document.getElementById("closeLightbox").onclick = closeGallery;
+
+lightbox.onclick = (e) => {
+  if (e.target === lightbox) closeGallery();
+};
+
+document.addEventListener("keydown", (e) => {
+  if (!lightbox.classList.contains("active")) return;
+
+  if (e.key === "Escape") closeGallery();
+  if (e.key === "ArrowRight") nextImage();
+  if (e.key === "ArrowLeft") prevImage();
+});
+
   </script>
 </body>
 </html>
