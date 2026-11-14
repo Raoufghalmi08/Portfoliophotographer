@@ -210,7 +210,7 @@
         </div>
       </div>
       <div class="portrait-wrap">
-        <!-- Your main portrait is here. Replace images/profile.png to change it. -->
+       
         <img class="portrait" src="images/profile.png" alt="Portrait of the photographer" />
         <div class="portrait-caption">The eye behind the lens · 01/01</div>
       </div>
@@ -224,7 +224,7 @@
         </div>
         <p class="section-side">Two moving frames. A collection that keeps unfolding — hover to pause.</p>
       </div>
-      <!-- Add or replace your photos in the WORKS arrays near the bottom of this file. -->
+      
       <div class="marquee" aria-label="Photography gallery moving left">
         <div class="marquee-track" id="row-one"></div>
       </div>
@@ -257,7 +257,7 @@
           </div>
           <div>
             <p class="contact-copy">For event coverage, creative projects or just to say hello — let's start a conversation.</p>
-            <!-- Replace the Instagram URL below with your exact profile link. -->
+            
             <a class="email-link" href="https://www.instagram.com/roff.pic/" target="_blank" rel="noopener">Instagram · @roff.pic ↗</a>
             <a class="email-link" href="https://wa.me/213657313249" target="_blank" rel="noopener">
   WhatsApp · Contact me 
@@ -282,16 +282,7 @@
 </div>
 
   <script>
-    /*
-      ============================================
-      ADD YOUR PHOTOS HERE
-      1) Put your photo files inside the "images" folder.
-      2) Change the paths below, for example:
-         { src: "images/oran-night.jpg", label: "Oran at night" }
-      3) Add as many items as you like.
-      Row 1 moves LEFT. Row 2 moves RIGHT.
-      ============================================
-    */
+   
     const ROW_ONE = [
       { src: "images/Background.png", label: "Architecture" },
       { src: "images/IMG_E4324.JPG", label: "City lights" },
@@ -339,7 +330,7 @@
 
     function buildMarquee(elementId, items) {
       const track = document.getElementById(elementId);
-      // Duplicate the same set to make the horizontal loop seamless.
+     
       [...items, ...items].forEach(item => track.appendChild(makeCard(item)));
     }
 
